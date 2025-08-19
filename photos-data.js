@@ -10,25 +10,55 @@ function getUniversalFallbackImage() {
 const photoData = [
   {
     "id": "photo1",
-    "image_url": "https://github.com/PvPGOST/testwablon-free/blob/c83fe13b15997e9d23e2b599c2a4d3609b52d672/photos/templates/template_1.jpg?raw=true",
+    "image_url": "https://i.postimg.cc/28DNCLs8/1.jpg",
     "title": "Шаблон №1",
     "displayName": "Романтический шаблон" // Красивое название для пользователя
   },
   {
     "id": "photo2", 
-    "image_url": "/photos/templates/template_2.jpg",
+    "image_url": "https://i.postimg.cc/FRLw4hGL/102.jpg",
     "title": "Шаблон №2",
     "displayName": "Элегантный портрет" // Красивое название для пользователя
   },
   {
     "id": "photo3",
-    "image_url": "/photos/templates/template_3.jpg", 
+    "image_url": "https://i.postimg.cc/prQ7mkwV/117.jpg", 
     "title": "Шаблон №3",
     "displayName": "Стильный коллаж" // Красивое название для пользователя
   },
   {
     "id": "photo4",
-    "image_url": "/photos/templates/template_4.jpg",
+    "image_url": "https://i.postimg.cc/Znz2YXDD/129.jpg",
+    "title": "Шаблон №4", 
+    "displayName": "Минималистичный дизайн" // Красивое название для пользователя
+  },
+  {
+    "id": "photo5",
+    "image_url": "https://i.postimg.cc/4x4C9k4D/20.jpg",
+    "title": "Шаблон №4", 
+    "displayName": "Минималистичный дизайн" // Красивое название для пользователя
+  },
+  {
+    "id": "photo6",
+    "image_url": "/https://i.postimg.cc/PrQsJrHb/23.jpg",
+    "title": "Шаблон №4", 
+    "displayName": "Минималистичный дизайн" // Красивое название для пользователя
+  },
+  {
+    "id": "photo7",
+    "image_url": "/https://i.postimg.cc/dV5bRHLL/6.jpg",
+    "title": "Шаблон №4", 
+    "displayName": "Минималистичный дизайн" // Красивое название для пользователя
+  },
+  {
+    "id": "photo8",
+    "image_url": "https://i.postimg.cc/pdygsfFk/83.jpg",
+    "title": "Шаблон №4", 
+    "displayName": "Минималистичный дизайн" // Красивое название для пользователя
+  },
+  {
+    "id": "photo9",
+    "image_url": "https://i.postimg.cc/DzDRHSQh/90.jpg",
     "title": "Шаблон №4", 
     "displayName": "Минималистичный дизайн" // Красивое название для пользователя
   }
@@ -98,5 +128,3 @@ console.log("Данные о фото загружены:", photoData);
   "message_id": "bot_params.message_id"   // ID сообщения из URL параметров
 }
 */
-
-
