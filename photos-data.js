@@ -10,7 +10,7 @@ function getUniversalFallbackImage() {
 const photoData = [
   {
     "id": "photo1",
-    "image_url": "/photos/templates/template_1.jpg",
+    "image_url": "https://github.com/PvPGOST/testwablon-free/blob/c83fe13b15997e9d23e2b599c2a4d3609b52d672/photos/templates/template_1.jpg",
     "title": "Шаблон №1",
     "displayName": "Романтический шаблон" // Красивое название для пользователя
   },
@@ -98,3 +98,4 @@ console.log("Данные о фото загружены:", photoData);
   "message_id": "bot_params.message_id"   // ID сообщения из URL параметров
 }
 */
+
