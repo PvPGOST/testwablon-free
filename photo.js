@@ -166,7 +166,7 @@ function displayPhoto(photo) {
             <!-- Основное фото -->
             <img 
                 id="photoElement"
-                style="width: 100%; min-height: 250px; max-height: 70vh; border: none !important; background-color: #000; object-fit: contain; display: none;"
+                style="width: 100%; height: auto; min-height: 250px; max-height: 70vh; border: none !important; background-color: #000; object-fit: contain; display: none;"
                 src="${photo.image_url}" 
                 alt="${photo.title}">
             
