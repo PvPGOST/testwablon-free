@@ -39,7 +39,7 @@ body {
 
 .video-preview, .photo-preview {
     position: relative;
-    aspect-ratio: 1/1; /* Квадратные превью для лучшего отображения */
+    aspect-ratio: 3/4; /* Вертикальные карточки - лучше видно содержимое */
     border: none; /* Убираем красную оконтовку */
     border-radius: 12px; /* Увеличиваем закругление краев */
     overflow: hidden;
