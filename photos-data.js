@@ -40,13 +40,13 @@ const photoData = [
   },
   {
     "id": "photo6",
-    "image_url": "/https://i.postimg.cc/PrQsJrHb/23.jpg",
+    "image_url": "https://i.postimg.cc/PrQsJrHb/23.jpg",
     "title": "Шаблон №4", 
     "displayName": "Минималистичный дизайн" // Красивое название для пользователя
   },
   {
     "id": "photo7",
-    "image_url": "/https://i.postimg.cc/dV5bRHLL/6.jpg",
+    "image_url": "https://i.postimg.cc/dV5bRHLL/6.jpg",
     "title": "Шаблон №4", 
     "displayName": "Минималистичный дизайн" // Красивое название для пользователя
   },
@@ -87,7 +87,7 @@ function getDurationText(photoId) {
     return 'Шаблон не найден';
   }
   
-  return `Фото-шаблон: ${photo.displayName}`;
+  return photo.displayName; // Только название без "Фото-шаблон:"
 }
 
 // Системы лайков и избранного убраны
