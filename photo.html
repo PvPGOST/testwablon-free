@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Просмотр фото-шаблона</title>
+    <link rel="stylesheet" href="styles.css?v=3.7">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="photos-data.js"></script>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="navigation-bar">
+            <div id="backButton" class="back-button">Назад</div>
+        </div>
+        
+        <div class="photo-player-container">
+            <div id="photoContainer" class="photo-player"></div>
+        </div>
+        
+        <div class="photo-info">
+            <div class="photo-header">
+                <div>
+                    <div id="photoTitle" class="photo-number"></div>
+                    <div id="photoDescription" class="photo-duration">Описание шаблона</div>
+                </div>
+            </div>
+            <button id="confirmButton" class="confirm-button">ВЫБРАТЬ ШАБЛОН</button>
+        </div>
+    </div>
+
+    <script type="module" src="stagewise-init.js"></script>
+    <script src="photo.js"></script>
+</body>
+</html>
