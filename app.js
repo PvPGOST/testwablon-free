@@ -296,12 +296,67 @@ function loadAllImagesImmediately() {
     });
 }
 
+// Переменная для отслеживания режима избранного
+let showingFavorites = false;
+
+// Функция для переключения между всеми фото и избранными
+function toggleFavoriteView() {
+    showingFavorites = !showingFavorites;
+    const toggleButton = document.getElementById('favoritesToggle');
+    const toggleIcon = toggleButton?.querySelector('.favorites-toggle-icon');
+    
+    if (showingFavorites) {
+        // Показываем только избранные
+        loadFavoritePhotoGrid();
+        toggleIcon.textContent = '★';
+        toggleButton.classList.add('active');
+    } else {
+        // Показываем все фото
+        loadPhotoGrid();
+        toggleIcon.textContent = '☆';
+        toggleButton.classList.remove('active');
+    }
+}
+
+// Функция для загрузки только избранных фото
+async function loadFavoritePhotoGrid() {
+    const photoGridElement = document.getElementById('photoGrid') || document.getElementById('videoGrid');
+    
+    // Очищаем сетку перед загрузкой новых данных
+    photoGridElement.innerHTML = '';
+    
+    // Получаем избранные фото
+    const favoritePhotos = getFavoritePhotos();
+    
+    if (favoritePhotos.length === 0) {
+        photoGridElement.innerHTML = '<p class="no-videos">⭐ У вас пока нет избранных шаблонов ⭐<br><span class="coming-soon">Добавьте шаблоны в избранное нажав на звездочку</span></p>';
+        return;
+    }
+    
+    // Загружаем избранные фото
+    favoritePhotos.forEach(photo => {
+        const previewElement = createPhotoPreview(photo);
+        photoGridElement.appendChild(previewElement);
+    });
+    
+    // Инициализируем ленивую загрузку
+    setTimeout(() => {
+        initLazyLoading();
+    }, 100);
+}
+
 // Загружаем сетку фото при загрузке страницы
 document.addEventListener('DOMContentLoaded', async () => {
     saveBotParamsFromURL();
 
     try {
         await loadPhotoGrid();
+        
+        // Настраиваем кнопку переключения избранного
+        const favoritesToggle = document.getElementById('favoritesToggle');
+        if (favoritesToggle) {
+            favoritesToggle.addEventListener('click', toggleFavoriteView);
+        }
         
         // Инициализируем ленивую загрузку после создания элементов
         setTimeout(() => {

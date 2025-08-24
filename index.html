@@ -10,23 +10,62 @@
 
     <style>
         /* Стили для заголовка */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000000;
+            padding: 15px 20px;
+            position: relative;
+        }
+        
         .header {
             font-size: 24px;
             font-weight: 700;
             text-align: center;
             margin: 0;
             color: #ff0000;
-            background-color: #000000;
-            padding: 15px 0;
+            flex: 1;
+        }
+        
+        .favorites-toggle {
+            background: none;
             border: none;
-            box-shadow: none;
-            border-radius: 0;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .favorites-toggle-icon {
+            color: rgba(255, 215, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+        
+        .favorites-toggle:hover .favorites-toggle-icon {
+            color: rgba(255, 215, 0, 0.9);
+            transform: scale(1.1);
+        }
+        
+        .favorites-toggle.active .favorites-toggle-icon {
+            color: #ffd700;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="header">Выбирай</h1>
+        <div class="header-container">
+            <h1 class="header">Выбирай</h1>
+            <button id="favoritesToggle" class="favorites-toggle">
+                <span class="favorites-toggle-icon">☆</span>
+            </button>
+        </div>
         
         <div id="photoGrid" class="photo-grid" style="margin-top: -10px;">
             <!-- Сюда будут загружены превью фото -->
