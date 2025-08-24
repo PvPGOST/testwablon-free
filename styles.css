@@ -1,0 +1,673 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    background-color: #0d0d0d;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Стили для страницы списка видео */
+.page-title {
+    text-align: center;
+    padding: 15px 0;
+    font-size: 20px;
+    color: #ff0000;
+    background-color: #121721;
+    margin-bottom: 0;
+}
+
+.video-grid, .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.video-preview, .photo-preview {
+    position: relative;
+    aspect-ratio: 3/4; /* Вертикальные карточки - лучше видно содержимое */
+    border: none; /* Убираем красную оконтовку */
+    border-radius: 12px; /* Увеличиваем закругление краев */
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #000000;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Контейнер для видео/фото с наложенными элементами */
+.video-container, .photo-container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Медиа занимает всю высоту карточки */
+}
+
+/* Старые стили для .video-info убраны - теперь используем .video-preview .video-info */
+
+/* Стили для индикатора загрузки */
+.loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+    color: #ffffff;
+}
+
+.loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ff0000;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 12px;
+    font-weight: 500;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Стили для overlay с ошибкой */
+.error-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 25;
+    border-radius: 12px;
+}
+
+.error-icon {
+    font-size: 24px;
+    opacity: 0.8;
+}
+
+.error-text {
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Fallback изображения убраны для оптимизации */
+
+/* Стили для отображения длительности видео на превью */
+.video-preview .video-duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+}
+
+/* Стили для ярлыка NEW */
+.new-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ff0000;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    z-index: 15;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Стили для длительности на странице просмотра видео */
+.video-info .video-duration {
+    font-size: 14px;
+    opacity: 0.8;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: #cccccc;
+    position: static;
+}
+
+/* Стили лайков и избранного убраны */
+
+
+
+/* При наведении применяем тень без красной рамки */
+.video-preview:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Убираем подсветку для выбранного элемента */
+.video-preview.selected {
+    border: none;
+    box-shadow: none;
+}
+
+.video-preview img, .photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* На превью заполняет всё пространство */
+    border-radius: 12px; /* Закругленные края для изображений */
+}
+
+.video-preview video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Обеспечивает заполнение всего контейнера */
+    border-radius: 12px 12px 0 0; /* Закругленные края только сверху */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.video-preview video:hover {
+    transform: scale(1.02);
+}
+
+/* Стили для информации о видео в превью - поверх видео */
+.video-preview .video-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 15px 10px 10px 10px;
+    color: white;
+    border-radius: 0 0 12px 12px;
+    z-index: 10; /* Поверх видео */
+}
+
+.video-preview .video-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    line-height: 1.2;
+}
+
+.video-preview .video-info p {
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.9;
+    line-height: 1.3;
+}
+
+/* Сообщение об отсутствии видео */
+.no-videos {
+    text-align: center;
+    color: #999;
+    font-size: 16px;
+    padding: 40px 20px;
+    grid-column: 1 / -1;
+}
+
+.coming-soon {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ff6b6b;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Лайки теперь видимы */
+
+/* Стили для страницы просмотра видео */
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    background-color: #121721;
+}
+
+.back-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 8px 15px;
+    cursor: pointer;
+    color: #000000; /* Меняем на черный текст */
+    background-color: #ff0000;
+    font-weight: 500;
+    position: relative;
+    border-radius: 4px;
+    width: auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* Стили для кнопок "Предыдущее" и "Следующее" */
+.prev-button,
+.next-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 8px 15px;
+    cursor: pointer;
+    color: #000000;
+    background-color: #ff0000;
+    font-weight: 500;
+    position: relative;
+    border-radius: 4px;
+    width: auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* Удаляем красную линию под текстом, так как сама кнопка теперь красная */
+.back-button::after {
+    display: none;
+}
+
+.video-title {
+    margin-bottom: 16px;
+    font-size: 22px;
+}
+
+.video-player-container, .photo-player-container {
+    width: 100%;
+    margin-bottom: 16px;
+    border-radius: 0;
+    overflow: hidden;
+    background-color: #000;
+    border: none !important;
+    position: relative;
+}
+
+.video-player, .photo-player {
+    width: 100%;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.video-player iframe, .video-player video {
+    width: 100%;
+    height: 100%;
+    max-height: 60vh;
+    border: none !important;
+}
+
+.photo-player img {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    border: none !important;
+    object-fit: contain; /* На странице просмотра показывает целиком */
+    background-color: #000;
+}
+
+.video-description {
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: var(--tg-theme-secondary-bg-color, #fff);
+    border-radius: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.confirm-button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: #ff0000; /* Красная кнопка для соответствия дизайну */
+    color: #000000; /* Меняем цвет текста на черный */
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: opacity 0.2s;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.confirm-button:hover, .confirm-button:active {
+    opacity: 0.9;
+}
+
+/* Стили для скрытия элементов управления видео по умолчанию */
+video::-webkit-media-controls {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+video::-webkit-media-controls-enclosure {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+/* Стили для элементов управления, когда они видимы */
+video[controls]::-webkit-media-controls,
+video[controls]::-webkit-media-controls-enclosure {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Дополнительные стили для видео */
+video {
+    min-height: 250px;
+    max-height: 60vh;
+    width: 100%;
+    object-fit: contain;
+    background-color: #000;
+    border: none !important;
+    cursor: pointer;
+}
+
+/* Стили для fallback контейнера основного видео */
+.video-fallback-container {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+    max-height: 60vh;
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.video-loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+    color: #ffffff;
+}
+
+.video-loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ff0000;
+    animation: spin 1s ease-in-out infinite;
+}
+
+.video-loading-text {
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+.video-fallback-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+.video-error-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 25;
+    border-radius: 8px;
+}
+
+.video-error-icon {
+    font-size: 48px;
+    opacity: 0.8;
+}
+
+.video-error-text {
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+.video-error-subtext {
+    font-size: 12px;
+    color: #cccccc;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* Стили для фото-дисплея */
+.photo-display-container {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+    max-height: 70vh;
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.photo-loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+    color: #ffffff;
+}
+
+.photo-loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ff0000;
+    animation: spin 1s ease-in-out infinite;
+}
+
+.photo-loading-text {
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+/* photo-fallback-image убрано */
+
+.photo-error-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 25;
+    border-radius: 8px;
+}
+
+.photo-error-icon {
+    font-size: 48px;
+    opacity: 0.8;
+}
+
+.photo-error-text {
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+.photo-error-subtext {
+    font-size: 12px;
+    color: #cccccc;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* Одинаковые стили для кнопок навигации "Назад", "Предыдущее" и "Следующее" */
+.back-button:hover, 
+.prev-button:hover,
+.next-button:hover {
+    background-color: #e60000;
+}
+
+.back-button:active, 
+.prev-button:active,
+.next-button:active {
+    transform: translateY(1px);
+}
+
+/* Стили для описания с действиями */
+.description-with-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.video-instruction {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+
+
+/* Стили для элементов под видео/фото */
+.video-header, .photo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+.video-actions, .photo-actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+
+
+/* === ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ СТРАНИЦЫ ПРОСМОТРА ВИДЕО/ФОТО === */
+
+/* Переопределение стилей для video.html и photo.html */
+.video-info, .photo-info {
+    padding: 15px;
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    position: relative;
+}
+
+.video-number, .photo-number {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-align: left;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.video-instruction {
+    font-size: 14px;
+    opacity: 0.9;
+    text-align: left;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.video-info .video-duration, .photo-info .photo-duration {
+    font-size: 14px;
+    opacity: 0.8;
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    color: #cccccc;
+}
+
+.spacer {
+    flex-grow: 0;
+    height: 20px;
+}
+
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #121721;
+    margin-top: auto;
+    color: #ffffff;
+}
+
+video::-webkit-media-controls-start-playbook-button {
+    display: none !important;
+}
+
+.video-navigation {
+    display: flex;
+    gap: 10px;
+}
+
+.confirm-button {
+    margin-top: 15px;
+    width: 100%;
+} 
