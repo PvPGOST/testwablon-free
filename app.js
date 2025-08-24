@@ -320,13 +320,20 @@ function toggleFavoriteView() {
 
 // Функция для загрузки только избранных фото
 async function loadFavoritePhotoGrid() {
+    console.log('=== ЗАГРУЗКА ИЗБРАННЫХ ФОТО ===');
     const photoGridElement = document.getElementById('photoGrid') || document.getElementById('videoGrid');
     
     // Очищаем сетку перед загрузкой новых данных
     photoGridElement.innerHTML = '';
     
+    // Проверяем кэш избранного
+    console.log('favoritePhotosCache:', favoritePhotosCache);
+    console.log('Функция getFavoritePhotos доступна:', typeof getFavoritePhotos === 'function');
+    
     // Получаем избранные фото
     const favoritePhotos = getFavoritePhotos();
+    console.log('Найдено избранных фото:', favoritePhotos.length);
+    console.log('Избранные фото:', favoritePhotos);
     
     if (favoritePhotos.length === 0) {
         photoGridElement.innerHTML = '<p class="no-videos">⭐ У вас пока нет избранных шаблонов ⭐<br><span class="coming-soon">Добавьте шаблоны в избранное нажав на звездочку</span></p>';
@@ -350,6 +357,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     saveBotParamsFromURL();
 
     try {
+        // Ждем загрузки избранного из Cloud Storage
+        if (typeof loadFavoritesFromCloud === 'function') {
+            await loadFavoritesFromCloud();
+            console.log('Избранное загружено:', favoritePhotosCache);
+        } else {
+            console.warn('loadFavoritesFromCloud не найдена');
+        }
+        
         await loadPhotoGrid();
         
         // Настраиваем кнопку переключения избранного
@@ -365,6 +380,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         
     } catch (error) {
         console.error('Ошибка при инициализации приложения:', error);
+        
+        // Все равно пытаемся загрузить избранное
+        try {
+            if (typeof loadFavoritesFromCloud === 'function') {
+                await loadFavoritesFromCloud();
+            }
+        } catch (e) {
+            console.warn('Ошибка загрузки избранного:', e);
+        }
+        
         await loadPhotoGrid();
         
         // Все равно инициализируем ленивую загрузку
