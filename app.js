@@ -212,6 +212,67 @@ async function loadVideoGrid() {
 // Intersection Observer для ленивой загрузки превью фото
 let lazyLoadObserver = null;
 
+// Кэш загруженных изображений (сохраняется в течение сессии)
+let loadedImagesCache = new Set();
+
+// TTL для кэша (12 часов в миллисекундах)
+const CACHE_TTL = 12 * 60 * 60 * 1000;
+
+// Загружаем кэш из sessionStorage при инициализации
+function loadImageCache() {
+    try {
+        const cached = sessionStorage.getItem('loadedImagesCache');
+        const cacheTimestamp = sessionStorage.getItem('loadedImagesCacheTime');
+        
+        if (cached && cacheTimestamp) {
+            const now = Date.now();
+            const cacheAge = now - parseInt(cacheTimestamp);
+            
+            // Проверяем не устарел ли кэш
+            if (cacheAge < CACHE_TTL) {
+                loadedImagesCache = new Set(JSON.parse(cached));
+                console.log('Загружен кэш изображений:', loadedImagesCache.size, 'элементов, возраст:', Math.round(cacheAge / 1000 / 60), 'минут');
+            } else {
+                console.log('Кэш изображений устарел, очищаем');
+                sessionStorage.removeItem('loadedImagesCache');
+                sessionStorage.removeItem('loadedImagesCacheTime');
+                loadedImagesCache = new Set();
+            }
+        }
+    } catch (e) {
+        console.warn('Ошибка загрузки кэша изображений:', e);
+        loadedImagesCache = new Set();
+    }
+}
+
+// Сохраняем кэш в sessionStorage
+function saveImageCache() {
+    try {
+        sessionStorage.setItem('loadedImagesCache', JSON.stringify([...loadedImagesCache]));
+        sessionStorage.setItem('loadedImagesCacheTime', Date.now().toString());
+    } catch (e) {
+        console.warn('Ошибка сохранения кэша изображений:', e);
+        // Если места нет - очищаем половину кэша
+        if (e.name === 'QuotaExceededError') {
+            clearOldImageCache();
+        }
+    }
+}
+
+// Очищаем старый кэш при переполнении
+function clearOldImageCache() {
+    const cacheArray = [...loadedImagesCache];
+    const halfSize = Math.floor(cacheArray.length / 2);
+    loadedImagesCache = new Set(cacheArray.slice(halfSize));
+    console.log('Кэш изображений очищен. Осталось:', loadedImagesCache.size, 'элементов');
+    try {
+        sessionStorage.setItem('loadedImagesCache', JSON.stringify([...loadedImagesCache]));
+    } catch (e) {
+        console.warn('Не удалось сохранить очищенный кэш:', e);
+        loadedImagesCache.clear();
+    }
+}
+
 // Функция инициализации ленивой загрузки
 function initLazyLoading() {
     // Проверяем поддержку Intersection Observer
@@ -253,7 +314,20 @@ function loadPreviewImage(previewElement) {
         return;
     }
     
-    // Показываем индикатор загрузки
+    const imageUrl = previewImage.dataset.src;
+    
+    // Проверяем кэш - если изображение уже загружалось, показываем его сразу
+    if (loadedImagesCache.has(imageUrl)) {
+        console.log(`Изображение найдено в кэше: ${imageUrl}`);
+        placeholder.style.display = 'none';
+        loadingIndicator.style.display = 'none';
+        previewImage.src = imageUrl;
+        previewImage.classList.remove('lazy-load');
+        previewImage.style.display = 'block';
+        return;
+    }
+    
+    // Показываем индикатор загрузки для новых изображений
     placeholder.style.display = 'none';
     loadingIndicator.style.display = 'flex';
     
@@ -262,6 +336,10 @@ function loadPreviewImage(previewElement) {
         console.log(`Превью фото загружено: ${previewImage.src}`);
         loadingIndicator.style.display = 'none';
         previewImage.style.display = 'block';
+        
+        // Добавляем в кэш и сохраняем
+        loadedImagesCache.add(imageUrl);
+        saveImageCache();
     }, { once: true });
     
     // Обработчик ошибки загрузки
@@ -269,6 +347,12 @@ function loadPreviewImage(previewElement) {
         console.error(`Ошибка загрузки превью фото: ${previewImage.src}`);
         loadingIndicator.style.display = 'none';
         errorOverlay.style.display = 'flex';
+        
+        // Удаляем из кэша если загрузка не удалась
+        if (loadedImagesCache.has(imageUrl)) {
+            loadedImagesCache.delete(imageUrl);
+            saveImageCache();
+        }
     }, { once: true });
     
     // Таймаут для медленных соединений (5 секунд)
@@ -277,6 +361,12 @@ function loadPreviewImage(previewElement) {
             console.warn(`Превью фото долго загружается: ${previewImage.dataset.src}`);
             loadingIndicator.style.display = 'none';
             errorOverlay.style.display = 'flex';
+            
+            // Удаляем из кэша при таймауте
+            if (loadedImagesCache.has(imageUrl)) {
+                loadedImagesCache.delete(imageUrl);
+                saveImageCache();
+            }
         }
     }, 5000);
     
@@ -355,6 +445,9 @@ async function loadFavoritePhotoGrid() {
 // Загружаем сетку фото при загрузке страницы
 document.addEventListener('DOMContentLoaded', async () => {
     saveBotParamsFromURL();
+    
+    // Инициализируем кэш изображений
+    loadImageCache();
 
     try {
         // Ждем загрузки избранного из Cloud Storage
