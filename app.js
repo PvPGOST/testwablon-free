@@ -115,7 +115,7 @@ function createPhotoPreview(photo) {
                 font-size: 14px;
                 border-radius: 12px;
             ">
-                🖼️ Загрузится при прокрутке
+                <div class="loading-spinner"></div>
             </div>
             
             <!-- Превью изображение (для ленивой загрузки) -->
@@ -134,8 +134,20 @@ function createPhotoPreview(photo) {
         </div>
     `;
     
-    // Ленивая загрузка изображений - изображения загружаются только при появлении в области видимости
-    // Этот элемент будет обработан системой ленивой загрузки
+    // Проверяем кэш и показываем изображение сразу, если оно уже загружено
+    const imageUrl = photo.preview_image || photo.image_url;
+    if (loadedImagesCache.has(imageUrl)) {
+        console.log(`Показываем из кэша: ${imageUrl}`);
+        const previewImage = previewElement.querySelector('.preview-image');
+        const placeholder = previewElement.querySelector('.preview-placeholder');
+        
+        // Сразу показываем изображение из кэша
+        placeholder.style.display = 'none';
+        previewImage.src = imageUrl;
+        previewImage.style.display = 'block';
+        previewImage.classList.remove('lazy-load');
+    }
+    // Если не в кэше - будет обработано системой ленивой загрузки
     
     // Добавляем обработчик клика для перехода к странице просмотра фото
     previewElement.addEventListener('click', () => {
@@ -186,6 +198,9 @@ async function loadPhotoGrid() {
             const previewElement = createPhotoPreview(photo);
             photoGridElement.appendChild(previewElement);
         });
+        
+        // Обновляем ленивую загрузку для новых элементов
+        updateLazyLoading();
     } else {
         // Если данных нет, показываем сообщение об ошибке
         photoGridElement.innerHTML = '<p class="error-message">Ошибка загрузки данных. Пожалуйста, попробуйте позже.</p>';
@@ -298,6 +313,7 @@ function initLazyLoading() {
     
     // Наблюдаем за всеми превью элементами
     document.querySelectorAll('.photo-preview').forEach(element => {
+        element.setAttribute('data-observed', 'true');
         lazyLoadObserver.observe(element);
     });
 }
@@ -386,6 +402,21 @@ function loadAllImagesImmediately() {
     });
 }
 
+// Функция для обновления ленивой загрузки после изменения содержимого
+function updateLazyLoading() {
+    if (lazyLoadObserver) {
+        // Наблюдаем за новыми элементами которые еще не в observer
+        document.querySelectorAll('.photo-preview:not([data-observed])').forEach(element => {
+            // Проверяем есть ли в элементе изображения с lazy-load классом
+            const lazyImage = element.querySelector('.preview-image.lazy-load');
+            if (lazyImage) {
+                element.setAttribute('data-observed', 'true');
+                lazyLoadObserver.observe(element);
+            }
+        });
+    }
+}
+
 // Переменная для отслеживания режима избранного
 let showingFavorites = false;
 
@@ -436,10 +467,8 @@ async function loadFavoritePhotoGrid() {
         photoGridElement.appendChild(previewElement);
     });
     
-    // Инициализируем ленивую загрузку
-    setTimeout(() => {
-        initLazyLoading();
-    }, 100);
+    // Обновляем ленивую загрузку для новых элементов
+    updateLazyLoading();
 }
 
 // Загружаем сетку фото при загрузке страницы
