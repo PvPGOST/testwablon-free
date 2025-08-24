@@ -670,4 +670,42 @@ video::-webkit-media-controls-start-playbook-button {
 .confirm-button {
     margin-top: 15px;
     width: 100%;
+}
+
+/* Стили для кнопки избранного */
+.favorite-button-video {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.favorite-button-video:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.favorite-button-video .favorite-icon {
+    font-size: 18px;
+    color: #ffffff;
+    transition: color 0.2s ease;
+}
+
+.favorite-button-video.favorite-active {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+.favorite-button-video.favorite-active .favorite-icon {
+    color: #ffd700; /* Золотой цвет для активного состояния */
+}
+
+.favorite-button-video.favorite-active:hover {
+    background: rgba(255, 215, 0, 0.3);
+    transform: scale(1.1);
 } 
