@@ -5,64 +5,64 @@
 const photoData = [
   {
     "id": "photo1",
-    "image_url": "/photo/photos/templates/template_1_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_1_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_1_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_1_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №1",
     "displayName": "Шаблон №1" // Название для пользователя
   },
   {
     "id": "photo2", 
-    "image_url": "/photo/photos/templates/template_2_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_2_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_2_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_2_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №2",
     "displayName": "Шаблон №2" // Название для пользователя
   },
   {
     "id": "photo3",
-    "image_url": "/photo/photos/templates/template_3_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_3_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_3_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_3_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №3",
     "displayName": "Шаблон №3" // Название для пользователя
   },
   {
     "id": "photo4",
-    "image_url": "/photo/photos/templates/template_4_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_4_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_4_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_4_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №4", 
     "displayName": "Шаблон №4" // Название для пользователя
   },
   {
     "id": "photo5",
-    "image_url": "/photo/photos/templates/template_5_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_5_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_5_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_5_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №5", 
     "displayName": "Шаблон №5" // Название для пользователя
   },
   {
     "id": "photo6",
-    "image_url": "/photo/photos/templates/template_6_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_6_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_6_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_6_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №6", 
     "displayName": "Шаблон №6" // Название для пользователя
   },
   {
     "id": "photo7",
-    "image_url": "/photo/photos/templates/template_7_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_7_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_7_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_7_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №7", 
     "displayName": "Шаблон №7" // Название для пользователя
   },
   {
     "id": "photo8",
-    "image_url": "/photo/photos/templates/template_8_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_8_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_8_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_8_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №8", 
     "displayName": "Шаблон №8" // Название для пользователя
   },
   {
     "id": "photo9",
-    "image_url": "/photo/photos/templates/template_9_watermark.jpg", // Версия с вотермарком для обработки
-    "preview_image": "/photo/photos/previews/template_9_clean.jpg", // Чистое превью для показа
+    "image_url": "photos/templates/template_9_watermark.jpg", // Версия с вотермарком для обработки
+    "preview_image": "photos/previews/template_9_clean.jpg", // Чистое превью для показа
     "title": "Шаблон №9", 
     "displayName": "Шаблон №9" // Название для пользователя
   }
