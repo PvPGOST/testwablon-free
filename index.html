@@ -2,18 +2,37 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Перенаправление...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Фото-шаблоны</title>
+    <link rel="stylesheet" href="styles.css?v=3.7">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="photos-data.js"></script>
+
+    <style>
+        /* Стили для заголовка */
+        .header {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin: 0;
+            color: #ff0000;
+            background-color: #000000;
+            padding: 15px 0;
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+        }
+    </style>
 </head>
 <body>
-    <script>
-        // Перенаправление для совместимости со старыми ссылками
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id');
-        if (id) {
-            window.location.href = `photo.html?id=${id}`;
-        } else {
-            window.location.href = 'index.html';
-        }
-    </script>
+    <div class="container">
+        <h1 class="header">Выбирай</h1>
+        
+        <div id="photoGrid" class="photo-grid" style="margin-top: -10px;">
+            <!-- Сюда будут загружены превью фото -->
+        </div>
+    </div>
+    <script type="module" src="stagewise-init.js"></script>
+    <script src="app.js"></script>
 </body>
-</html>
+</html> 
