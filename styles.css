@@ -672,40 +672,33 @@ video::-webkit-media-controls-start-playbook-button {
     width: 100%;
 }
 
-/* Стили для кнопки избранного */
+/* Стили для кнопки избранного (точно как в видео) */
 .favorite-button-video {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 8px 12px;
+    background: none;
+    border: none;
     cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
     transition: all 0.3s ease;
+    font-size: 42px !important;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.favorite-button-video:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-}
-
 .favorite-button-video .favorite-icon {
-    font-size: 18px;
-    color: #ffffff;
-    transition: color 0.2s ease;
+    color: rgba(255, 215, 0, 0.6);
+    transition: all 0.3s ease;
+    font-size: inherit !important;
 }
 
-.favorite-button-video.favorite-active {
-    background: rgba(255, 215, 0, 0.2);
-    border-color: rgba(255, 215, 0, 0.4);
+.favorite-button-video:hover .favorite-icon {
+    color: rgba(255, 215, 0, 0.9);
+    transform: scale(1.1);
 }
 
 .favorite-button-video.favorite-active .favorite-icon {
-    color: #ffd700; /* Золотой цвет для активного состояния */
-}
-
-.favorite-button-video.favorite-active:hover {
-    background: rgba(255, 215, 0, 0.3);
-    transform: scale(1.1);
+    color: #ffd700;
 } 
